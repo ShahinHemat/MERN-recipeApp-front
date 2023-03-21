@@ -7,6 +7,7 @@ export const Home = () => {
     const [recipes, setRecipes] = useState([]);
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [cookies, _] = useCookies(['access_token']);
+    const [showIngredients, setShowIngredients] = useState(false);
 
     const userID = useGetUserID();
 
@@ -35,7 +36,7 @@ export const Home = () => {
 
     const saveRecipe = async (recipeID) => {
         try {
-            const response = await axios.put('http://localhost:3001/recipes', {recipeID, userID}, { headers : { authorization: cookies.access_token }});
+            const response = await axios.put('http://localhost:3001/recipes', { recipeID, userID }, { headers: { authorization: cookies.access_token } });
             setSavedRecipes(response.data.savedRecipes)
         } catch (err) {
             console.error(err);
@@ -46,23 +47,36 @@ export const Home = () => {
 
     return (
         <div>
-            <h1>Recipes</h1>
+            <h1 id="home-heading">All Recipes</h1>
             <ul>
                 {recipes.map((recipe) => (
                     <li key={recipe._id}>
                         <div>
                             <h2>{recipe.name}</h2>
-                            <button 
-                            onClick={() => saveRecipe(recipe._id)}
-                            disabled={isRecipeSaved(recipe._id)}
+                            {/* <div>{recipe.ingredients}</div> */}
+
+                            <button
+                                onClick={() => saveRecipe(recipe._id)}
+                                disabled={isRecipeSaved(recipe._id)}
                             >
                                 {isRecipeSaved(recipe._id) ? 'Saved' : 'Save'}
-                                </button>
+                            </button>
+
+
+                            <button
+                                onClick={() => showIngredients ? setShowIngredients(false) : setShowIngredients(true)}
+                            >
+                                Ingredients</button>
                         </div>
+
+                        {showIngredients && recipe.ingredients.map((ingredient, i) => (
+                            <li key={i}>{ingredient}</li>
+                        ))}
+
                         <div className="instructions">
                             <p>{recipe.instructions}</p>
                         </div>
-                        <img src={recipe.imageUrl}/>
+                        <img src={recipe.imageUrl} />
                         <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
                     </li>
                 ))}

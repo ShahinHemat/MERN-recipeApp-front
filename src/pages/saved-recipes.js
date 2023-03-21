@@ -4,6 +4,7 @@ import { useGetUserID } from "../hooks/useGetUserID";
 
 export const SavedRecipes = () => {
     const [savedRecipes, setSavedRecipes] = useState([]);
+    const [showIngredients, setShowIngredients] = useState(false);
     const userID = useGetUserID();
 
     useEffect(() => {
@@ -28,7 +29,18 @@ export const SavedRecipes = () => {
                     <li key={recipe._id}>
                         <div>
                             <h2>{recipe.name}</h2>
+
+                            <button
+                                onClick={() => showIngredients ? setShowIngredients(false) : setShowIngredients(true)}
+                            >
+                                Ingredients</button>
+                            
                         </div>
+
+                        {showIngredients && recipe.ingredients.map((ingredient, i) => (
+                            <li key={i}>{ingredient}</li>
+                        ))}
+
                         <div className="instructions">
                             <p>{recipe.instructions}</p>
                         </div>

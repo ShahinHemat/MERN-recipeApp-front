@@ -115,3 +115,7 @@ p {
   max-width: 400px;
   font-size: 12px;
 }
+
+#home-heading {
+  text-align: center;
+}
