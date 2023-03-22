@@ -8,7 +8,7 @@ export const Home = () => {
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [cookies, _] = useCookies(['access_token']);
     const [showIngredients, setShowIngredients] = useState(false);
-
+    const [searchTerm, setSearchTerm] = useState('');
     const userID = useGetUserID();
 
     useEffect(() => {
@@ -45,11 +45,24 @@ export const Home = () => {
 
     const isRecipeSaved = (id) => savedRecipes.includes(id);
 
+    const filteredRecipes = recipes.filter((recipe) =>
+        recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div>
             <h1 id="home-heading">All Recipes</h1>
+            <div>
+                <label htmlFor="recipe-search">Search for a recipe:</label>
+                <input
+                    type="text"
+                    id="recipe-search"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
             <ul>
-                {recipes.map((recipe) => (
+                {filteredRecipes.map((recipe) => (
                     <li key={recipe._id}>
                         <div>
                             <h2>{recipe.name}</h2>
