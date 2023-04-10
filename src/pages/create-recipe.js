@@ -21,7 +21,7 @@ export const CreateRecipe = () => {
         name: "",
         description: '',
         ingredients: [],
-        instructions: '',
+        instructions: [],
         imageUrl: '',
         cookingTime: 0,
         userOwner: userID,
@@ -50,6 +50,23 @@ export const CreateRecipe = () => {
     };
 
 
+    const handleInstructionsChange = (e, idx) => {
+        const { value } = e.target;
+        const instructions = recipe.instructions;
+        instructions[idx] = value;
+        setRecipe({ ...recipe, instructions });
+    };
+
+    const instructionsRef = useRef(null);
+
+    const addInstructions = () => {
+        setRecipe({ ...recipe, instructions: [...recipe.instructions, ''] });
+        setTimeout(() => {
+            instructionsRef.current.focus();
+        }, 0);
+    };
+
+
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -68,24 +85,29 @@ export const CreateRecipe = () => {
                 <label htmlFor="name">Name</label>
                 <input type='text' id='name' name="name" onChange={handleChange} />
                 <label htmlFor="description">Description</label>
-                <textarea id='description' name='description' onChange={handleChange}></textarea>
+                <textarea id='description' name='description' onChange={handleChange} style={{ maxWidth: "400px", borderRadius:'5px', border: '2px solid black' }}></textarea>
 
                 <label htmlFor="ingredients">Ingredients</label>
-
                 {recipe.ingredients.map((ingredient, idx) => (
                     <input key={idx} type='text' name='ingredients' value={ingredient} onChange={(e) => handleIngredientChange(e, idx)} ref={idx === recipe.ingredients.length - 1 ? ingredientRef : null} />
                 ))}
+                <button onClick={addIngredient} type='button' style={{border: '2px solid black'}}>Add Ingredient</button>
 
-                <button onClick={addIngredient} type='button'>Add Ingredient</button>
+                <label htmlFor="ingredients">Instructions</label>
+                {recipe.instructions.map((instruction, idx) => (
+                    <input key={idx} type='text' name='instructions' value={instruction} onChange={(e) => handleInstructionsChange(e, idx)} ref={idx === recipe.instructions.length - 1 ? instructionsRef : null} />
+                ))}
+                <button onClick={addInstructions} type='button' style={{border: '2px solid black'}}>Add Instruction</button>
 
-                <label htmlFor="instructions">Instructions</label>
-                <textarea id="instructions" name="instructions" onChange={handleChange}></textarea>
+
                 <label htmlFor="imageUrl">Image URL</label>
                 <input type='text' id="imageUrl" name="imageUrl" onChange={handleChange} />
                 <label htmlFor="cookingTime">Cooking Time (minutes)</label>
                 <input type='number' id="cookingTime" name="cookingTime" onChange={handleChange} />
 
-                <button type="submit">Create Recipe</button>
+                <div className="button-wrapper">
+                    <button className="submit-button" type="submit">Create Recipe</button>
+                </div>
             </form>
         </div>
     );

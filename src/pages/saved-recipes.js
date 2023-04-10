@@ -5,6 +5,7 @@ import { useGetUserID } from "../hooks/useGetUserID";
 export const SavedRecipes = () => {
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [showIngredients, setShowIngredients] = useState(false);
+    const [showInstructions, setShowInstructions] = useState(false);
     const userID = useGetUserID();
 
     useEffect(() => {
@@ -20,32 +21,53 @@ export const SavedRecipes = () => {
         fetchSavedRecipe();
     }, []);
 
+    const handleIngredientsButtonClick = (recipeID) => {
+        setShowIngredients(prevID => prevID === recipeID ? null : recipeID);
+    }
+
+    const handleInstructionsButtonClick = (recipeID) => {
+        setShowInstructions(prevID => prevID === recipeID ? null : recipeID);
+    }
 
     return (
         <div>
-            <h1>Saved Recipes</h1>
+            <h1>My Saved Recipes</h1>
             <ul>
                 {savedRecipes.map((recipe) => (
                     <li key={recipe._id}>
                         <div>
                             <h2>{recipe.name}</h2>
 
-                            <button
-                                onClick={() => showIngredients ? setShowIngredients(false) : setShowIngredients(true)}
-                            >
-                                Ingredients</button>
-                            
+                            <p><em>{recipe.description}</em></p>
                         </div>
 
-                        {showIngredients && recipe.ingredients.map((ingredient, i) => (
+                        <img src={recipe.imageUrl} />
+                        <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
+
+                        <div className="saved-recipe-buttons-wrapper">
+                        <button
+                                onClick={() => handleIngredientsButtonClick(recipe._id)}
+                            >
+                                Ingredients
+                            </button>
+
+                            <button
+                                onClick={() => handleInstructionsButtonClick(recipe._id)}
+                            >
+                                Instructions
+                            </button>
+                        </div>
+
+                        <div className="saved-recipe-ingredients-instructions">
+                        {showIngredients === recipe._id && recipe.ingredients.map((ingredient, i) => (
                             <li key={i}>{ingredient}</li>
                         ))}
 
-                        <div className="instructions">
-                            <p>{recipe.instructions}</p>
+                        {showInstructions === recipe._id && recipe.instructions.map((instruction, i) => (
+                            <li key={i}>{i + 1}. {instruction}</li>
+                        ))}
                         </div>
-                        <img src={recipe.imageUrl} />
-                        <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
+                        
                     </li>
                 ))}
             </ul>

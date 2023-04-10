@@ -10,15 +10,20 @@
 body {
   margin: 0;
   padding: 0;
+  /* background-image: url('https://wallpapercave.com/wp/wp3306977.jpg'); */
+  background-image: url('https://us.123rf.com/450wm/alanstix64/alanstix641701/alanstix64170100018/70170365-the-velvet-fabric-texture-in-turquoise-color-shape-square.jpg');
 }
+
+
 
 .auth {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f2f2f2;
 }
+
+
 
 .auth-container {
   display: flex;
@@ -26,7 +31,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   margin: 20px;
@@ -50,11 +55,12 @@ input {
   border-radius: 5px;
 }
 
+
+
 .navbar {
   margin: 0;
   width: 100%;
   height: 80px;
-  background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,12 +68,22 @@ input {
   text-decoration: none;
 }
 
+
 a {
-  color: white;
+  color: #CEF0D4;
+  font-family: 'Rouge Script', cursive;
+  text-shadow: 1px 1px 2px #082b34;
   text-decoration: none;
-  margin: 10px;
-  font-size: 25px;
+  margin: 12px;
+  font-size: 26px;
 }
+
+a:hover {
+  transform: scale(1.02); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-decoration: underline; 
+}
+
 
 .create-recipe {
   display: flex;
@@ -75,16 +91,21 @@ a {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background-color: white;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   margin: 20px;
   width: 400px;
+  background-color: rgb(255, 255, 255, 0.6); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  text-align: center;
 }
+
 .create-recipe form {
   display: flex;
   flex-direction: column;
+  row-gap: 5px;
 }
+
+
 ul {
   list-style: none;
   padding: 0;
@@ -92,19 +113,35 @@ ul {
 }
 
 li {
-  border: 1px solid black;
+  border-radius: 5px; 
+  background-color: rgb(255, 255, 255, 0.6); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   padding: 10px;
   margin-bottom: 10px;
+  transition: transform 0.3s ease-in-out; 
 }
+
+li:hover {
+  transform: scale(1.02); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+
 
 h2 {
   margin-top: 0;
+  text-align: center;
+  font-family: 'Rouge Script', cursive;
+  color: rgb(4, 50, 71);
+  font-size: 30px;
+  margin-bottom: 5px;
 }
 
 img {
   max-width: 100%;
   height: auto;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
 }
 
 img {
@@ -113,7 +150,11 @@ img {
 
 p {
   max-width: 400px;
-  font-size: 12px;
+  font-size: 15px;
+  font-family: 'Carme', sans-serif;
+  color: black;
+  text-align: center;
+  margin-top: 0px;
 }
 
 #home-heading {
@@ -121,5 +162,166 @@ p {
 }
 
 #recipe-search {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: #CEF0D4;
+}
+
+#search-for-recipe {
+  color: #e3f2e5;
+  font-size: 22px;
+  font-family: 'Rouge Script', cursive;
+  text-shadow: 1px 1px 2px #082b34;
+  text-align: center;
+}
+
+.ingredients-instructions-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:hover {
+  background-color: rgb(230, 232, 234);
+}
+
+button#save-button:hover {
+  color: white;
+  background-color: rgb(16, 171, 16, 0.6);
+}
+
+button#delete-button:hover {
+  background-color: rgb(201, 6, 6, 0.8);
+  color: white;
+}
+
+button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+button:focus-visible {
+  box-shadow: none;
+}
+
+.home-page-button {
+  margin: 4px
+}
+
+.saved {
+  background-color: rgb(16, 171, 16, 0.6);
+}
+
+
+#logout {
+  background-color: rgb(255, 255, 255, 0.2);
+  
+}
+
+#logout:hover {
+  transform: scale(1.02); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.list-ingredients-instructions {
+  margin-top: 10px;
+}
+
+/* CSS for the submit button */
+.submit-button {
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  border: none;
+  padding: 10px 40px;
+  color: #000000;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* CSS for the green bar animation */
+.submit-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%; /* Start the bar from outside of the button */
+  width: 100%;
+  height: 100%;
+  background-color: #00ff00; /* Green color of the bar */
+  transition: left 0.3s ease; /* Animation transition properties */
+}
+
+/* CSS for the green bar animation on hover */
+.submit-button:hover::before {
+  left: 0; /* Move the bar from left to right on hover */
+}
+
+
+h1 {
+  color: #CEF0D4;
+  font-family: 'Rouge Script', cursive;
+  text-shadow: 5px 1px 2px #082b34;
+  margin-top: -10px;
+  text-align: center;
+}
+
+.saved-recipe-buttons-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.saved-recipe-ingredients-instructions {
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 934px) {
+  .auth {
+    display: flex;
+    flex-direction: column; 
+    width: 100vw;
+  }
+
+  .navbar {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  #search-for-recipe {
+    margin-top: 50px;
+  }
+
+  .create-recipe {
+    margin-top: 80px;
+  }
+
+  button {
+    padding: 12px 13px
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+  
 }

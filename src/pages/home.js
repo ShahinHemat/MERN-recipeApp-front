@@ -8,6 +8,7 @@ export const Home = () => {
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [cookies, _] = useCookies(['access_token']);
     const [showIngredients, setShowIngredients] = useState(false);
+    const [showInstructions, setShowInstructions] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const userID = useGetUserID();
 
@@ -46,7 +47,8 @@ export const Home = () => {
     const isRecipeSaved = (id) => savedRecipes.includes(id);
 
     const filteredRecipes = recipes.filter((recipe) =>
-        recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
+        recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        recipe.ingredients.some((ingredient) => ingredient.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     const deleteRecipe = async (recipeID) => {
@@ -62,10 +64,22 @@ export const Home = () => {
         }
     };
 
+    const handleIngredientsButtonClick = (recipeID) => {
+        setShowIngredients(prevID => prevID === recipeID ? null : recipeID);
+    }
+
+    const handleInstructionsButtonClick = (recipeID) => {
+        setShowInstructions(prevID => prevID === recipeID ? null : recipeID);
+    }
+
+    const savedButtonStyle = {
+        backgroundColor: 'green',
+    };
+
     return (
         <div>
             <div id="search-for-recipe">
-                <label htmlFor="recipe-search">Search for a recipe:</label>
+                <label htmlFor="recipe-search">Search Recipes: </label>
                 <input
                     type="text"
                     id="recipe-search"
@@ -73,44 +87,68 @@ export const Home = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
-            <ul>
-                {filteredRecipes.map((recipe) => (
-                    <li key={recipe._id}>
-                        <div>
-                            <h2>{recipe.name}</h2>
-                            {/* <div>{recipe.ingredients}</div> */}
 
-                            <button
-                                onClick={() => saveRecipe(recipe._id)}
-                                disabled={isRecipeSaved(recipe._id)}
-                            >
-                                {isRecipeSaved(recipe._id) ? 'Saved' : 'Save'}
-                            </button>
+            {filteredRecipes.length === 0 ? (
+                <p>No Recipes To Show</p>
+            ) : (
+                <ul>
+                    {filteredRecipes.map((recipe) => (
+                        <li key={recipe._id}>
+                            <div>
+                                <h2>{recipe.name}</h2>
 
-                            <button
-                                onClick={() => showIngredients ? setShowIngredients(false) : setShowIngredients(true)}
-                            >
-                                Ingredients</button>
+                                <p><em>{recipe.description}</em></p>
 
-                            <button
-                                onClick={() => deleteRecipe(recipe._id)}
-                            >
-                                Delete</button>
+                            </div>
 
-                        </div>
+                            <img src={recipe.imageUrl} />
+                            <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
 
-                        {showIngredients && recipe.ingredients.map((ingredient, i) => (
-                            <li key={i}>{ingredient}</li>
-                        ))}
+                            <div className="ingredients-instructions-div">
+                                <button
+                                    id="ingredients-button"
+                                    onClick={() => handleIngredientsButtonClick(recipe._id)}
+                                >
+                                    Ingredients
+                                </button>
 
-                        <div className="instructions">
-                            <p>{recipe.instructions}</p>
-                        </div>
-                        <img src={recipe.imageUrl} />
-                        <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
-                    </li>
-                ))}
-            </ul>
+                                <button
+                                    id="instructions-button"
+                                    onClick={() => handleInstructionsButtonClick(recipe._id)}
+                                >
+                                    Instructions
+                                </button>
+
+                                <button
+                                    className={`${isRecipeSaved(recipe._id) ? 'saved' : ''}`}
+                                    id="save-button"
+                                    onClick={() => saveRecipe(recipe._id)}
+                                    disabled={isRecipeSaved(recipe._id)}
+                                    style={isRecipeSaved(recipe._id) ? savedButtonStyle : {}}
+                                >
+                                    {isRecipeSaved(recipe._id) ? 'Saved' : 'Save'}
+                                </button>
+
+
+                                {userID === "6419b78fa0aff4173d96e89a" || userID === "lise" ? (
+                                    <button id="delete-button" onClick={() => deleteRecipe(recipe._id)}>Delete</button>
+                                ) : null}
+                            </div>
+
+                            <div className="list-ingredients-instructions">
+                                {showIngredients === recipe._id && recipe.ingredients.map((ingredient, i) => (
+                                    <li key={i}><em>{ingredient}</em></li>
+                                ))}
+
+                                {showInstructions === recipe._id && recipe.instructions.map((instruction, i) => (
+                                    <li key={i}>{i + 1}. {instruction}</li>
+                                ))}
+                            </div>
+
+
+                        </li>
+                    ))}
+                </ul>)}
         </div>
     );
 };
