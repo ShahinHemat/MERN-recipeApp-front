@@ -49,10 +49,22 @@ export const Home = () => {
         recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const deleteRecipe = async (recipeID) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this recipe?");
+        if (confirmDelete) {
+            try {
+                await axios.delete(`http://localhost:3001/recipes/${recipeID}`, { headers: { authorization: cookies.access_token } });
+                const response = await axios.get('http://localhost:3001/recipes');
+                setRecipes(response.data);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    };
+
     return (
         <div>
-            <h1 id="home-heading">All Recipes</h1>
-            <div>
+            <div id="search-for-recipe">
                 <label htmlFor="recipe-search">Search for a recipe:</label>
                 <input
                     type="text"
@@ -75,11 +87,16 @@ export const Home = () => {
                                 {isRecipeSaved(recipe._id) ? 'Saved' : 'Save'}
                             </button>
 
-
                             <button
                                 onClick={() => showIngredients ? setShowIngredients(false) : setShowIngredients(true)}
                             >
                                 Ingredients</button>
+
+                            <button
+                                onClick={() => deleteRecipe(recipe._id)}
+                            >
+                                Delete</button>
+
                         </div>
 
                         {showIngredients && recipe.ingredients.map((ingredient, i) => (
