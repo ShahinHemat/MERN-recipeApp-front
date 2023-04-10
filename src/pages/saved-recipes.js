@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
+import { useCookies } from "react-cookie";
 
 export const SavedRecipes = () => {
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [showIngredients, setShowIngredients] = useState(false);
     const [showInstructions, setShowInstructions] = useState(false);
+    const [cookies, _] = useCookies(['access_token']);
     const userID = useGetUserID();
 
     useEffect(() => {
@@ -18,8 +20,12 @@ export const SavedRecipes = () => {
             }
         };
 
-        fetchSavedRecipe();
-    }, []);
+        if (!cookies.access_token) {
+            window.location.href = '/auth';
+        } else {
+            fetchSavedRecipe();
+        }
+    }, [cookies.access_token, userID]);
 
     const handleIngredientsButtonClick = (recipeID) => {
         setShowIngredients(prevID => prevID === recipeID ? null : recipeID);

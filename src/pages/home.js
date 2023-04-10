@@ -130,7 +130,7 @@ export const Home = () => {
                                 </button>
 
 
-                                {userID === "6419b78fa0aff4173d96e89a" || userID === "lise" ? (
+                                {userID === "6419b78fa0aff4173d96e89a" || userID === "64345f8f058709d3a68f4f4a" ? (
                                     <button id="delete-button" onClick={() => deleteRecipe(recipe._id)}>Delete</button>
                                 ) : null}
                             </div>
