@@ -119,7 +119,7 @@ export const Home = () => {
                                     Instructions
                                 </button>
 
-                                <button
+                                {userID && <button
                                     className={`${isRecipeSaved(recipe._id) ? 'saved' : ''}`}
                                     id="save-button"
                                     onClick={() => saveRecipe(recipe._id)}
@@ -127,7 +127,8 @@ export const Home = () => {
                                     style={isRecipeSaved(recipe._id) ? savedButtonStyle : {}}
                                 >
                                     {isRecipeSaved(recipe._id) ? 'Saved' : 'Save'}
-                                </button>
+                                </button>}
+
 
 
                                 {userID === "6419b78fa0aff4173d96e89a" || userID === "64345f8f058709d3a68f4f4a" ? (
