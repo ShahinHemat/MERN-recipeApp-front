@@ -3,6 +3,8 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
+const apiUrl = 'https://recipe-app-api-gbtz.onrender.com/' || 'http://localhost:3001/';
+
 export const Auth = () => {
     return (
         <div className="auth">
